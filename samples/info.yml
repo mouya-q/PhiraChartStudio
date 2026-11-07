@@ -1,0 +1,25 @@
+name: "Synthetic Test"
+difficulty: 8.00000
+level: "HD 8"
+charter: "Phira Chart Studio"
+composer: "Unknown"
+illustrator: "Phira Chart Studio"
+chart: "chart.json"
+format: rpe
+music: "song.mp3"
+illustration: "background.png"
+previewStart: 0.00000
+previewEnd: 28.00000
+aspectRatio: 1.7777778
+backgroundDim: 0.55
+lineLength: 6.0
+offset: 0.0
+tags:
+  - "Auto Generated"
+  - "Offline Analysis"
+intro: "Generated locally by Phira Chart Studio. Please review and edit before publishing."
+holdPartialCover: false
+noteUniformScale: false
+forceAspectRatio: false
+useRpe170Speed: false
+useAttachUiFix: true

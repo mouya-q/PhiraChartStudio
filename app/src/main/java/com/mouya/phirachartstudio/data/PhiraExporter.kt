@@ -97,8 +97,8 @@ class PhiraExporter(private val context: Context) {
     ) {
         val required = setOf("info.yml", "chart.json", "background.png", audioName)
         val names = LinkedHashSet<String>()
-        var infoText: String? = null
-        var chartText: String? = null
+        var infoText: ByteArray? = null
+        var chartText: ByteArray? = null
         var audioBytes = 0L
         var backgroundBytes = 0L
         val input = resolver.openInputStream(target) ?: error("无法重新打开导出的谱包")

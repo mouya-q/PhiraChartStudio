@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.matchParentSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -653,9 +652,13 @@ private fun StatusPill(text: String, color: Color) {
 
 @Composable
 private fun ProgressTrack(progress: Float) {
+    // Theme colours are read in the composable scope: the Canvas draw lambda is
+    // not @Composable and cannot call MiuixTheme.colorScheme itself.
+    val trackColor = MiuixTheme.colorScheme.surfaceVariant
+    val barColor = MiuixTheme.colorScheme.primary
     Canvas(Modifier.fillMaxWidth().height(7.dp).clip(RoundedCornerShape(8.dp))) {
-        drawRoundRect(MiuixTheme.colorScheme.surfaceVariant, cornerRadius = androidx.compose.ui.geometry.CornerRadius(size.height / 2f))
-        drawRoundRect(MiuixTheme.colorScheme.primary, size = Size(size.width * progress.coerceIn(0f, 1f), size.height),
+        drawRoundRect(trackColor, cornerRadius = androidx.compose.ui.geometry.CornerRadius(size.height / 2f))
+        drawRoundRect(barColor, size = Size(size.width * progress.coerceIn(0f, 1f), size.height),
             cornerRadius = androidx.compose.ui.geometry.CornerRadius(size.height / 2f))
     }
 }
@@ -692,4 +695,3 @@ private fun formatTime(milliseconds: Long): String {
     val total = (milliseconds.coerceAtLeast(0) / 1000).toInt()
     return "%d:%02d".format(total / 60, total % 60)
 }
-

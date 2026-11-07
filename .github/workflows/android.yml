@@ -27,11 +27,25 @@ jobs:
         with:
           gradle-version: '9.6.0'
 
+      # setup-android's default package list starts with the retired "tools"
+      # package, which no longer exists in cmdline-tools 16.x; sdkmanager then
+      # exits 1 and kills the job before any build step runs. Requesting only
+      # platform-tools avoids that, and the platform itself is already present
+      # on the runner image (see the report step below).
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools'
 
-      - name: Install Android platform
-        run: sdkmanager "platforms;android-37" "build-tools;36.0.0"
+      # The runner image already ships the API 37 platforms (android-37.0 /
+      # 37.1 / 37.2) and build-tools 36.0.0 & 37.0.0. They are reported instead
+      # of installed because `sdkmanager "platforms;android-37"` fails: that
+      # exact package path does not exist, while compileSdk = 37 resolves
+      # against the preinstalled platform.
+      - name: Report installed SDK packages
+        run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          sdkmanager --list_installed 2>/dev/null | sed -n '1,60p' || true
 
       - name: Run engine and app tests
         run: gradle :engine:test :app:testDebugUnitTest

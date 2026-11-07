@@ -9,3 +9,6 @@ local.properties
 .env.*
 .DS_Store
 Thumbs.db
+
+# Operit workspace chat/editor backups — editor state, never project source.
+.backup/
